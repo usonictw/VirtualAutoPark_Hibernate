@@ -12,7 +12,7 @@ import java.util.Set;
 public class Drivers {
 
     @Id
-    @Column(name = "id_driver")
+    @Column(name = "driver_id")
     private int id;
 
     @Column(name = "name")
@@ -24,8 +24,63 @@ public class Drivers {
     @Column(name = "age")
     private int age;
 
-    @ManyToMany
-    @JoinTable(name = "drivers_buses", joinColumns = @JoinColumn(name = "id_driver"),
-            inverseJoinColumns = @JoinColumn(name = "bus_id"))
-    List<Busses> busses = new ArrayList<>();
+    @ManyToMany(targetEntity = Busses.class)
+    private Set<Busses> busses = new HashSet<>();
+
+    public Drivers() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Set<Busses> getBusses() {
+        return busses;
+    }
+
+    public void setBusses(Set<Busses> busses) {
+        this.busses = busses;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Drivers drivers = (Drivers) o;
+
+        if (age != drivers.age) return false;
+        if (!name.equals(drivers.name)) return false;
+        if (!surname.equals(drivers.surname)) return false;
+        return busses.equals(drivers.busses);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + surname.hashCode();
+        result = 31 * result + age;
+        result = 31 * result + busses.hashCode();
+        return result;
+    }
 }

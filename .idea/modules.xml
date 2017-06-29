@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VirtualAutoPark_Hibernate.iml" filepath="$PROJECT_DIR$/.idea/modules/VirtualAutoPark_Hibernate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VirtualAutoPark.iml" filepath="$PROJECT_DIR$/.idea/modules/VirtualAutoPark.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VirtualAutoPark_main.iml" filepath="$PROJECT_DIR$/.idea/modules/VirtualAutoPark_main.iml" group="VirtualAutoPark" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VirtualAutoPark_test.iml" filepath="$PROJECT_DIR$/.idea/modules/VirtualAutoPark_test.iml" group="VirtualAutoPark" />
     </modules>
   </component>
 </project>

@@ -14,15 +14,17 @@ public class Busses {
     @Column(name = "bus_id")
     private int id;
 
-    @Column(name = "busses")
+    @Column(name = "buses")
     private int number;
 
-    @OneToMany()
-    @JoinColumn(name = "route_id", referencedColumnName = "bus_id")
-    Set<Routes> routes = new HashSet<>();
+    @ManyToOne()
+    @JoinColumn(name = "route_id")
+    private Routes routes;
 
     @ManyToMany
-    Drivers drivers;
+    @JoinTable(name = "bus_driver", joinColumns = @JoinColumn(name = "bus_id"),
+            inverseJoinColumns = @JoinColumn(name = "driver_id"))
+    private Set<Drivers> drivers = new HashSet<>();
 
 
     public Busses() {
@@ -44,6 +46,15 @@ public class Busses {
         this.number = number;
     }
 
+    public Routes getRoutes() {
+        return routes;
+    }
+
+    public void setRoutes(Routes routes) {
+        this.routes = routes;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,16 +62,18 @@ public class Busses {
 
         Busses busses = (Busses) o;
 
-        if (id != busses.id) return false;
         if (number != busses.number) return false;
-        return routes != null ? routes.equals(busses.routes) : busses.routes == null;
+        if (!routes.equals(busses.routes)) return false;
+        return drivers.equals(busses.drivers);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + number;
-        result = 31 * result + (routes != null ? routes.hashCode() : 0);
+        int result = number;
+        result = 31 * result + routes.hashCode();
+        result = 31 * result + drivers.hashCode();
         return result;
     }
 }
+
+

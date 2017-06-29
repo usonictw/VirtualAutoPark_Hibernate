@@ -1,6 +1,8 @@
 package model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "routes")
@@ -17,8 +19,8 @@ public class Routes {
     @Column(name = "number")
     private int number;
 
-    @ManyToOne(targetEntity = Busses.class)
-    private Busses busses;
+    @OneToMany(mappedBy = "routes", cascade = CascadeType.ALL)
+    private Set<Busses> busses = new HashSet<>();
 
     public Routes() {
     }
@@ -47,11 +49,30 @@ public class Routes {
         this.number = number;
     }
 
-    public Busses getBusses() {
+    public Set<Busses> getBusses() {
         return busses;
     }
 
-    public void setBusses(Busses busses) {
+    public void setBusses(Set<Busses> busses) {
         this.busses = busses;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Routes routes = (Routes) o;
+
+        if (id != routes.id) return false;
+        if (number != routes.number) return false;
+        return busses != null ? busses.equals(routes.busses) : routes.busses == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = number;
+        result = 31 * result + (busses != null ? busses.hashCode() : 0);
+        return result;
     }
 }
